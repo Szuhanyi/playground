@@ -59,7 +59,6 @@ namespace nsga
             List<Solution> front = rankings.GetFront(i);
             while (front.Count > 0)
             {                
-                //List<Individual> nextFront = new List<Individual>();
                 foreach (Solution p in front)
                 {
                     foreach (Solution q in p.DominatedSolutions)
