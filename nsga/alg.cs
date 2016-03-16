@@ -242,14 +242,14 @@ namespace nsga
             child1.Evaluate(functions);
         }
 
-        private List<Solution> Combine(List<Solution> population, List<Solution> offspringPopulation)
+        private List<Solution> Combine(List<Solution> population1, List<Solution> population2)
         {
             List<Solution> list = new List<Solution>();
-            foreach(Solution s in offspringPopulation)
+            foreach(Solution s in population2)
             {
                 list.Add(s);
             }
-            foreach (Solution s in population)
+            foreach (Solution s in population1)
             {
                 list.Add(s);
             }
@@ -258,7 +258,27 @@ namespace nsga
 
         private List<Solution> Selection(List<Solution> combinedPopulation)
         {
-            throw new NotImplementedException();
+            int n = combinedPopulation.Count / 2;
+            List<Solution> list = new List<Solution>();
+            int f = 0;
+            while (list.Count < n)
+            {
+                List<Solution> front = rankings.GetFront(f);
+                foreach(Solution s in front)
+                {
+                    list.Add(s);
+                }
+                f++;
+            }
+            if (list.Count > n)
+            {
+                // need to remove a few elements based on theier crowding distance 
+                while (list.Count > n)
+                { // and how do you do that ??? hhuh ?
+                    list.Remove(list.Last());
+                }
+            }
+            return list;
         }
 
         private List<Solution> CreateRandomParentPopulation(int size)
@@ -305,8 +325,9 @@ namespace nsga
                 {
                     distances[i] = 0;
                 }
+            }
                 foreach(ObjectiveFunction m in functions)
-                {
+                 { 
                     List<Solution> sortedList = SortObjective(population, functions.IndexOf(m));
                     //  population = Selection(population, m);
                     //   for (int i = 0; i < population.Count; i++)
@@ -320,11 +341,11 @@ namespace nsga
                     {
                         population.ElementAt(i).Distance[functions.IndexOf(m)] = 
                             population.ElementAt(i).Distance[functions.IndexOf(m)]
-                            + (population.ElementAt(i + 1).Distance[functions.IndexOf(m)] - population.ElementAt(i - 1).Distance[functions.IndexOf(m)]) 
-                                / (this.max - this.min);
+                            + (population.ElementAt(i + 1).ObjectiveValue[functions.IndexOf(m)] - population.ElementAt(i - 1).ObjectiveValue[functions.IndexOf(m)]) 
+                                / (m.Max - m.Min);
                     }
                 }
-            }
+            
         }
 
         private List<Solution> SortObjective(List<Solution> population, int index)
@@ -349,11 +370,7 @@ namespace nsga
             return list;
         }
 
-        private List<Solution> Selection(List<Solution> population, ObjectiveFunction function)
-        {
-
-            return null;
-        }
+       
     }
 }
  
