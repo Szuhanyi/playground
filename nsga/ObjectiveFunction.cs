@@ -20,5 +20,10 @@ namespace nsga
             get { return max; }
             set { max = value; }
         }
+
+        internal double Evaluate(double d)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
