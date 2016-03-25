@@ -299,12 +299,7 @@ namespace nsga
         {
             throw new NotImplementedException();
         }
-
-        private List<Solution> tournamentSelection(List<Solution> population, Ranking rankings, int pool, int tour)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public void AssignCrowdingDistance()
         {
             int n = rankings.GetFrontCount();
@@ -314,6 +309,7 @@ namespace nsga
                 CrowdingDistanceAssignment(list);
             }
         }
+
         private void CrowdingDistanceAssignment(List<Solution> population)
         {
             int l = population.Count;
