@@ -8,6 +8,7 @@ namespace nsga
 {
     class alg
     {
+        // TODO: I need to implement the constraint handling... so ... do int now :)))
         private List<Solution> population;
         private List<Solution> offspringPopulation;
         private List<Solution> combinedPopulation;
