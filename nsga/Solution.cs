@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace nsga
 {
-    class Solution : Individual
+    public class Solution 
     {
         private List<double> value;
         private List<double> decisionVariables;
@@ -14,18 +14,31 @@ namespace nsga
         private HashSet<Solution> dominatedSolutions;
         private double crowdingDistance;
         private List<double> distances;
+        private int fitness;
 
-        private Solution solution;        
-
-        public Solution(Solution solution)
-        {
-            this.solution = solution;
-        }
 
         public Solution()
         {
+            ObjectiveValue = new List<double>();
+            decisionVariables = new List<double>();
+            dominatedSolutions = new HashSet<Solution>();
         }
 
+        public Solution(Solution sol) : this()
+        {
+            
+           // decisionVariables = new List<double>();
+            foreach (double s in sol.DecisionVariables)
+            {
+                this.decisionVariables.Add(s);
+            }
+        }
+
+        public int Fitness
+        {
+            get { return fitness; }
+            set { fitness = value; }
+        }
         public List<double> DecisionVariables
         {
             get { return decisionVariables; }
@@ -53,10 +66,7 @@ namespace nsga
             get { return dominatedSolutions; }
             set
             {   
-                if (dominatedSolutions == null)
-                {
-                    dominatedSolutions = new HashSet<Solution>();
-                }
+                
                 dominatedSolutions = (HashSet<Solution>) value;
             }
         }
@@ -79,20 +89,20 @@ namespace nsga
             bool dominates = false;
             for(int i = 0; i < value.Count; i++)
             {
-                if(this.value[i] <= individual.ObjectiveValue[i])
+                if(this.ObjectiveValue[i] <= individual.ObjectiveValue[i])
                 {
                     counter++;
                 }
             }
             if (counter == value.Count)
             {
-             //   for (int i = 0; i < value.Count; i++)
-               // {
-                 //   if (this.value[i] < individual.ObjectiveValue[i])
-                   // {
+                for (int i = 0; i < value.Count; i++)
+                {
+                   if (this.value[i] < individual.ObjectiveValue[i])
+                    {
                         dominates = true;
-                    //}
-                //}
+                    }
+                }
             }
             return dominates;
         }       
@@ -105,8 +115,13 @@ namespace nsga
 
         internal void Evaluate(List<ObjectiveFunction> functions)
         {
+
             for(int i = 0; i < functions.Count; i++)
             {
+                if (this.ObjectiveValue.Count <= i)
+                {
+                    ObjectiveValue.Add(EvaluateObjectiveFunction(functions.ElementAt(i), decisionVariables));
+                }
                 this.ObjectiveValue[i] = EvaluateObjectiveFunction(functions.ElementAt(i), decisionVariables);
             }
         }
@@ -115,13 +130,13 @@ namespace nsga
         {
             // I really dont know  how to evaluate an objective function, when there are more then one decision variables
             // because I try to minimize the solution, I just aggregated them into one value (for now)
-            double sum = 0;
-            foreach(double d in decisionVariables)
-            {
-                sum += objectiveFunction.Evaluate(d);
+            return objectiveFunction.Evaluate(decisionVariables);
+             
             }
 
-            return sum;
+        internal void AddDecisionVariable(double p)
+        {
+            this.decisionVariables.Add(p);
         }
     }
 

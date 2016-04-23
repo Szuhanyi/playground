@@ -6,24 +6,33 @@ using System.Threading.Tasks;
 
 namespace nsga
 {
-    class ObjectiveFunction
+    abstract class ObjectiveFunction
     {
-        private float min;
-        private float max;
-        public float Min
+        private double min;
+        private double max;
+        private int n;
+        public double Min
         {
             get { return min; }
             set { min = value; }
         }
-        public float Max
+        public double Max
         {
             get { return max; }
             set { max = value; }
         }
 
-        internal double Evaluate(double d)
+        public abstract double Evaluate(List<double> list);
+        
+
+        public int DecisionVariablesCount
         {
-            throw new NotImplementedException();
+            get
+            {
+                return n;
+            }
+            set { n = value; }
+
         }
     }
 }

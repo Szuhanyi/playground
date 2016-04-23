@@ -21,7 +21,7 @@ namespace nsga
         }
         public List<Solution> GetFront(int index)
         {
-            if (index > rankings.Count)
+            if (index >= rankings.Count)
             {
                 rankings.Add(new List<Solution>());
             }
@@ -29,13 +29,14 @@ namespace nsga
         }
         public void AddIndividual(int rank, Solution individual)
         {
-            if (rank > rankings.Count)
+            if (rank >= rankings.Count)
             {
                 rankings.Add(new List<Solution>());
             }
             try
             {
-                List<Solution> list = rankings.ElementAt(rank);
+                rankings.ElementAt(rank).Add(individual);
+                
             }
             catch (Exception)
             {

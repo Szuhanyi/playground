@@ -16,5 +16,15 @@ namespace nsga
         {
             InitializeComponent();
         }
+
+        private void buttonEvaluate_Click(object sender, EventArgs e)
+        {
+            Algorithm nsga = new Nsga2();
+            int pop = 10;
+            int gen = 10;
+            Population p = nsga.StartEvaluation(pop, gen);
+            //p.PrintToConsole();
+        
+        }
     }
 }
