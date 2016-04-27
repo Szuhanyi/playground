@@ -28,7 +28,7 @@ namespace TestNsgaCC
             {
                 newGenom.Add(genom.Get(genom.GetCount()-1));
             }
-            double eps = 0.01;
+            double eps = 0.001;
 
             int mistakes = 0;           
             List<Solution>.Enumerator e = newGenom.GetEnumerator();
@@ -44,7 +44,7 @@ namespace TestNsgaCC
                     }
                 }
             }
-            Assert.AreEqual(mistakes, 0);
+            Assert.AreEqual(0, mistakes);
 
         }
     }

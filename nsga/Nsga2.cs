@@ -65,7 +65,11 @@ namespace nsga
             }
             for (int j = 0; j < rankings.GetFrontCount(); j++ )
             {
-                front = rankings.GetFront(i);
+                front = rankings.GetFront(j);
+                foreach (Solution s in front)
+                {
+                    s.Fitness = j;
+                }
             }
         }
 
@@ -76,10 +80,15 @@ namespace nsga
                 List<Solution> front = rankings.GetFront(i);
                 foreach (Solution s in front)
                 {
+                    foreach (double d in s.DecisionVariables)
+                    {
+
+                    }
                     Console.WriteLine(i + " " + s.DecisionVariables[0]);
                 }
             }
         }
+
         private void AssignCrowdingDistance()
         {
             int n = rankings.GetFrontCount();
@@ -167,6 +176,9 @@ namespace nsga
                 genom.Copy(combinedGenom.Selection());
                 newGenom = genom.CreateOffspring();
             }
+
+            newGenom.PrintToConsole();
+            this.RankingsPrintToConsole();
             //PrintToConsole(genom);
            // genom.PrintToConsole();
           

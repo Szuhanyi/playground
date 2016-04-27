@@ -125,9 +125,9 @@ namespace nsga
                 }
                 f++;
             }
-            while (i >= n)
+            while (i > n)
             {
-                p.Remove(p.GetCount());
+                p.Remove(p.GetCount() - 1);
                 i--;
             }
             return p;

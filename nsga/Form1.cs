@@ -21,7 +21,7 @@ namespace nsga
         {
             Algorithm nsga = new Nsga2();
             int pop = 10;
-            int gen = 10;
+            int gen = 1000;
             Population p = nsga.StartEvaluation(pop, gen);
             //p.PrintToConsole();
         

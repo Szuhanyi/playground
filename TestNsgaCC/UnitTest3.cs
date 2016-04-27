@@ -87,5 +87,18 @@ namespace TestNsgaCC
             Population p3 = p1.Concat(p2);
             Assert.AreEqual(p3.GetCount(), p1.GetCount() + p2.GetCount());
         }
+        [TestMethod]
+        public void SelectionCountTest()
+        {
+            int pop = 10;
+            Population genom = new Population();
+            genom.NewPopulation(pop);
+            Population genom2 = new Population();
+            genom2.NewPopulation(pop);
+            Population pop3 = genom.Concat(genom2);
+            
+            genom = pop3.Selection();
+            Assert.AreEqual(pop3.GetCount() / 2, genom.GetCount());
+        }
     }
 }
