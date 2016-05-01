@@ -112,23 +112,31 @@ namespace nsga
             Population p = new Population();
             //fitness [0,1,...,m] front index
             int i = 0;
-            int f = 0;
+            //int f = 0;
+            //while (i < n)
+            //{
+            //    foreach (Solution s in genom)
+            //    {
+            //        if (f == s.Fitness)
+            //        {
+            //            p.Add(s);
+            //            i++;
+            //        }
+            //    }
+            //    f++;
+            //}
+
+            //while (i > n)
+            //{
+            //    p.Remove(p.GetCount() - 1);
+            //    i--;
+            //}
+
             while (i < n)
             {
-                foreach (Solution s in genom)
-                {
-                    if (f == s.Fitness)
-                    {
-                        p.Add(s);
-                        i++;
-                    }
-                }
-                f++;
-            }
-            while (i > n)
-            {
-                p.Remove(p.GetCount() - 1);
-                i--;
+                p.Add(genom.ElementAt(i));
+               
+                i++;
             }
             return p;
         }

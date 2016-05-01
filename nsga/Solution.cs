@@ -13,7 +13,7 @@ namespace nsga
         private int dominationCount;
         private HashSet<Solution> dominatedSolutions;
         private double crowdingDistance;
-        private List<double> distances;
+        private double distances;
         private int fitness;
 
 
@@ -107,7 +107,7 @@ namespace nsga
             return dominates;
         }       
 
-        public List<double> Distance
+        public double Distance
         {
             get { return distances; }
             set { distances = value; }

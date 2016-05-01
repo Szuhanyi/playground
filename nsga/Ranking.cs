@@ -44,5 +44,10 @@ namespace nsga
             }
         }
 
+
+        internal void Remove(int p)
+        {
+            rankings.Remove(rankings.Last());
+        }
     }
 }

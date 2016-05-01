@@ -95,10 +95,10 @@ namespace TestNsgaCC
             genom.NewPopulation(pop);
             Population genom2 = new Population();
             genom2.NewPopulation(pop);
-            Population pop3 = genom.Concat(genom2);
+            Population combined = genom.Concat(genom2);
             
-            genom = pop3.Selection();
-            Assert.AreEqual(pop3.GetCount() / 2, genom.GetCount());
+            genom = combined.Selection();
+            Assert.AreEqual(combined.GetCount() / 2, genom.GetCount());
         }
     }
 }

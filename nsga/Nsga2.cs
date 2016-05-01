@@ -9,7 +9,6 @@ namespace nsga
     public class Nsga2 : Algorithm
     {        
         private Ranking rankings;
-      
         private void FastNonDominatedSort(Population genom)
         {
             genom.EvaluateObjectiveFunctions();
@@ -70,6 +69,10 @@ namespace nsga
                 {
                     s.Fitness = j;
                 }
+                if (front.Count == 0)
+                {
+                    rankings.Remove(rankings.GetFrontCount() - 1);
+                }
             }
         }
 
@@ -80,11 +83,13 @@ namespace nsga
                 List<Solution> front = rankings.GetFront(i);
                 foreach (Solution s in front)
                 {
+                    string list = "";
                     foreach (double d in s.DecisionVariables)
                     {
-
+                        list += d + "; ";
                     }
-                    Console.WriteLine(i + " " + s.DecisionVariables[0]);
+                    Console.WriteLine(i + " " + list);
+                   
                 }
             }
         }
@@ -99,38 +104,27 @@ namespace nsga
             }
         }
 
-        private void CrowdingDistanceAssignment(List<Solution> population)
+        private void CrowdingDistanceAssignment(List<Solution> front)
         {
-            //int l = population.Count;
+            TestFunctions functions = TestFunctions.GetTestFunctions();
 
-            //double[] distances = new double[functions.Count];
-            //foreach (Solution s in population)
-            //{
-            //    for (int i = 0; i < distances.Length; i++)
-            //    {
-            //        distances[i] = 0;
-            //    }
-            //}
-            //    foreach(ObjectiveFunction m in functions)
-            //     { 
-            //        List<Solution> sortedList = SortObjective(population, functions.IndexOf(m));
-            //        //  population = Selection(population, m);
-            //        //   for (int i = 0; i < population.Count; i++)
-            //        //   {
-            //        //     population.ElementAt(i
-
-            //        //  }
-            //        sortedList.First().Distance[functions.IndexOf(m)] = infinite;
-            //        sortedList.Last().Distance[functions.IndexOf(m)] = infinite;
-            //        for (int i= 1; i < (l-1); i++)
-            //        {
-            //            population.ElementAt(i).Distance[functions.IndexOf(m)] = 
-            //                population.ElementAt(i).Distance[functions.IndexOf(m)]
-            //                + (population.ElementAt(i + 1).ObjectiveValue[functions.IndexOf(m)] - population.ElementAt(i - 1).ObjectiveValue[functions.IndexOf(m)]) 
-            //                    / (m.Max - m.Min);
-            //        }
-            //    }
-            
+            foreach (Solution s in front)
+            {           
+                s.Distance = 0;
+            }
+            for (int j = 0; j < functions.GetFunctionCount(); j++)
+            {
+                List<Solution> sortedList = SortObjective(front, j);
+                sortedList.First().Distance = infinite;
+                sortedList.Last().Distance = infinite;
+                for (int i = 1; i < sortedList.Count - 1; i++)
+                {
+                    sortedList.ElementAt(i).Distance =
+                        sortedList.ElementAt(i).Distance
+                        + Math.Abs(front.ElementAt(i + 1).ObjectiveValue[j] - sortedList.ElementAt(i - 1).ObjectiveValue[j])
+                            / (functions.GetUpperThreshold() - functions.GetLowerThreshold());
+                }
+            }            
         }
 
         private List<Solution> SortObjective(List<Solution> population, int index)
@@ -138,25 +132,65 @@ namespace nsga
             List<Solution> list = new List<Solution>(population);
             List<Solution> newList = new List<Solution>();
             Solution min = null;
-            while (list.Count > 0)
+             while (list.Count > 0)
             {
-                min = new Solution(list.First());
+                min =  list.First();
                 for(int j = 1; j < list.Count; j++)
                 {
                     if (min.ObjectiveValue[index] > list[j].ObjectiveValue[index])
                     {
                         min = list[j];
                     }
-                    newList.Add(min);
-                    list.Remove(min);
                 }
+
+                newList.Add(min);
+                list.Remove(min);
             }
             
-            return list;
+            return newList;
         }
-        
+        private Population SortPopulation(Population geom) 
+        {
+            Population pop = new Population();
+
+            for (int i = 0; i < rankings.GetFrontCount(); i++)
+            {
+
+                var front = rankings.GetFront(i);
+                while (front.Count > 0)
+                {
+                    var min = front.First();
+                    for (int j = 1; j < front.Count; j++)
+                    {
+                        if (min.Dominates(front.ElementAt(j)))
+                        {
+                            min = front.ElementAt(j);
+                        }
+                        else
+                        {   // front[j] does not dominate min either
+                            // this mean that they are kinda equal
+                            if (!front.ElementAt(j).Dominates(min))
+                            {
+                                // crowind distance
+                                if (min.Distance > front.ElementAt(j).Distance)
+                                {
+                                    min = front.ElementAt(j);
+                                }
+                            }
+                        }
+                    }
+
+                    pop.Add(min);
+                    front.Remove(min);
+                }
+
+ 
+            }
+            return pop;
+        }
         public Population StartEvaluation(int populationCount, int generationCount)
         {
+            infinite = 10000;
             Population genom = new Population();           
             genom.NewPopulation(populationCount);
             Console.WriteLine("Initial population");
@@ -173,7 +207,8 @@ namespace nsga
                 Population combinedGenom = genom.Concat(newGenom);
                 FastNonDominatedSort(combinedGenom);
                 genom.RemoveAll();
-                genom.Copy(combinedGenom.Selection());
+                AssignCrowdingDistance();
+                genom.Copy(SortPopulation(combinedGenom).Selection());
                 newGenom = genom.CreateOffspring();
             }
 
@@ -189,6 +224,7 @@ namespace nsga
         {
             throw new NotImplementedException();
         }
-    }
+    
+public  double infinite { get; set; }}
 }
  
