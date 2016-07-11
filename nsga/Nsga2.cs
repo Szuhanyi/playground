@@ -162,6 +162,7 @@ namespace nsga
                     var min = front.First();
                     for (int j = 1; j < front.Count; j++)
                     {
+                        if(!min.Equals(front.ElementAt(j))) {
                         if (min.Dominates(front.ElementAt(j)))
                         {
                             min = front.ElementAt(j);
@@ -172,11 +173,12 @@ namespace nsga
                             if (!front.ElementAt(j).Dominates(min))
                             {
                                 // crowind distance
-                                if (min.Distance > front.ElementAt(j).Distance)
+                                if (min.Distance < front.ElementAt(j).Distance)
                                 {
                                     min = front.ElementAt(j);
                                 }
                             }
+                        }
                         }
                     }
 
