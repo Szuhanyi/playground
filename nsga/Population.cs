@@ -19,12 +19,13 @@ namespace nsga
 
         public Population(List<Solution> offsprings) : this()
         {
-            // TODO: Complete member initialization
+            //initialize with given values
+
             genom = new List<Solution>();
            // this.genom.Clear();
             foreach (Solution s in offsprings)
             {
-                this.genom.Add(s);
+                this.genom.Add(new Solution(s));
             }
         }
 

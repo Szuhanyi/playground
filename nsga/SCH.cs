@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace nsga
 {
-    class functionSch : ObjectiveFunction
+    class SCH : ObjectiveFunction
     {
         bool method1;
-        public functionSch(bool first)
+        public SCH(bool first)
         {
             method1 = first;            
             this.Min = -1000;

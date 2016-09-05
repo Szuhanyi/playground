@@ -21,10 +21,7 @@ namespace nsga
             get { return max; }
             set { max = value; }
         }
-
-        public abstract double Evaluate(List<double> list);
         
-
         public int DecisionVariablesCount
         {
             get
@@ -32,7 +29,9 @@ namespace nsga
                 return n;
             }
             set { n = value; }
-
         }
+
+        public abstract double Evaluate(List<double> list);
+        
     }
 }
