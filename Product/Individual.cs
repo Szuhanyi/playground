@@ -11,6 +11,7 @@ namespace Product
         private Population dominatedSet;
 
         private double[] values;
+        private Individual i;
 
         public double[] Values
         {
@@ -24,6 +25,11 @@ namespace Product
 
         public Individual()
         {
+        }
+
+        public Individual(Individual i)
+        {
+            this.i = i;
         }
 
         public int DominatedBy { get; internal set; }
@@ -62,9 +68,9 @@ namespace Product
                 return 1;
             else
             {
-                ServiceTestFunctions tf = ServiceTestFunctions.GetInstance();
-                int index = tf.GetCurrentFunctionIndex();
-                return this.values[index].CompareTo(other.values[index]);
+            //    ServiceTestFunctions tf = ServiceTestFunctions.GetInstance();
+            //    int index = tf.GetCurrentFunctionIndex();
+                return this.Distance.CompareTo(other.Distance);
             }
         }
         

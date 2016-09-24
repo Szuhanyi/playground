@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithm.cs" />
+    <Compile Include="Crossover.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,6 +61,7 @@
     </Compile>
     <Compile Include="GeneticOperator.cs" />
     <Compile Include="Individual.cs" />
+    <Compile Include="Mutation.cs" />
     <Compile Include="MyFunction.cs" />
     <Compile Include="Nsga2.cs" />
     <Compile Include="Population.cs" />

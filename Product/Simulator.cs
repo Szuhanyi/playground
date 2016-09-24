@@ -15,12 +15,14 @@ namespace Product
             algorithm = new Nsga2();
         }
         
-        public void GenerateInitialPopulation()
+        public void GenerateInitialPopulation(int populationCount)
         {
             population = new Population();
             ServiceTestData td = ServiceTestData.getInstance();
-            population.SetGenom(td.getMockInitialPopulation());
+            population.SetGenom(td.getMockInitialPopulation(populationCount));
         }
+
+      
 
         public void RunEvolution(int iterationCount)
         {

@@ -12,13 +12,12 @@ namespace Product
         private Algorithm algorithm;
         private List<Individual> genom;
         private List<GeneticOperator> genOperator;
+        private List<Individual> successor;
 
         public Population()
         {
             genom = new List<Individual>();
-        }
-   
-     
+        }   
         
         public String ToReadableFormat()
         {
@@ -33,7 +32,11 @@ namespace Product
 
         internal void Add(Individual i)
         {
-            throw new NotImplementedException();
+            if(genom == null)
+            {
+                genom = new List<Individual>();
+            }
+            genom.Add(i);
         }
 
         /*
@@ -42,8 +45,16 @@ namespace Product
          * */
         public Population Concat(Population p1, Population p2)
         {
-
-            return null;
+            Population p3 = new Population();
+            foreach(Individual i in p1)
+            {
+                p3.Add(i);
+            }
+            foreach(Individual i in p2)
+            {
+                p3.Add(i);
+            }
+            return p3;
         }
 
         public void setAlgorithm(Algorithm alg)
@@ -59,32 +70,51 @@ namespace Product
             this.genom.Sort();
         }
 
+        //concatenats the second one to the first
         internal void ConcatenateTwoExistingPopulations()
         {
-            throw new NotImplementedException();
+            foreach(Individual i in successor)
+            {
+                genom.Add(i);
+            }
         }
 
       
 
         internal void SortBy(int i)
         {
-            genom.OrderBy(x => x.Values[i]);
-            
+            genom.OrderBy(x => x.Values[i]);            
         }
+
 
         internal Individual Last()
         {
-            throw new NotImplementedException();
+            return genom.Last();
+            
         }
 
         internal Individual First()
         {
-            throw new NotImplementedException();
+            return genom.First();
         }
 
+        /***
+         * this method should generate another genom, by applying genetic operators 
+         * 
+         * */
         internal void NextGeneration()
-        {
-            throw new NotImplementedException();
+        {           
+            successor = new List<Individual>();
+            
+            foreach(Individual i in genom)
+            {
+                successor.Add(new Individual(i));
+            }
+
+            foreach (GeneticOperator g in genOperator)
+            {
+                g.MakeChange(successor);
+            }
         }
 
         /*

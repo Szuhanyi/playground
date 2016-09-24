@@ -19,6 +19,11 @@ namespace Product
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Simulator s = new Simulator();
+            s.GenerateInitialPopulation(10);
+            s.RunEvolution(10);
+           
+            
         }
     }
 }

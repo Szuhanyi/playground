@@ -15,6 +15,14 @@ namespace Product
         {
         }
 
+
+        public void Sort(Population p)
+        {
+            //sorts by the aggregated disatance value
+            p.Sort();
+        }
+        
+        
         //The ranking property must be initialized, and filled up with values,
         //by the Rank(p) method.
         public void ExecuteSelection(Population population)
