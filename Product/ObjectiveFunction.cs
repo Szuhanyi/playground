@@ -35,6 +35,6 @@ namespace Product
         }
 
         public abstract double Evaluate(List<double> list);
-        
+        public abstract String ToReadableFormat();
     }
 }

@@ -53,6 +53,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="InitialTest.cs" />
+    <Compile Include="TestPopulation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -10,6 +10,7 @@ namespace Product
     {
         private Algorithm algorithm;
         private Population population;
+
         public Simulator()
         {            
             algorithm = new Nsga2();
@@ -20,17 +21,19 @@ namespace Product
             population = new Population();
             ServiceTestData td = ServiceTestData.getInstance();
             population.SetGenom(td.getMockInitialPopulation(populationCount));
-        }
-
-      
+        }      
 
         public void RunEvolution(int iterationCount)
         {
 
             ServiceOutput output = ServiceOutput.GetInstance();
+            //output.SetOutput(new OutputFile());
+
+            output.SetOutput(new OutputFile());
+
             output.Write("Starting new evolution. Iteration count : " 
                 + iterationCount);
-
+            
             for (int i = 0; i < iterationCount; i++)
             {
                 population.NextGeneration();
@@ -49,7 +52,6 @@ namespace Product
            }
             
         }
-
         
     }
 }

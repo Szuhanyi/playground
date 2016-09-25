@@ -8,11 +8,12 @@ namespace Product
 {
     public  class ServiceTestData
     {
-        private static List<TestData> initialPopulation;
+        private  List<TestData> initialPopulation;
         private static ServiceTestData instance;
+
         private ServiceTestData()
         {
-            initialPopulation = new List<TestData>();
+            
         }
         public static ServiceTestData getInstance()
         {
@@ -25,17 +26,22 @@ namespace Product
 
         public List<TestData> getMockInitialPopulation(int length)
         {
-            
-            ServiceTestFunctions service = ServiceTestFunctions.GetInstance();
-
-            double min = service.GetMin();
-            double max = service.GetMax();
-
-            for(int i = 0; i < length; i++)
+            if (initialPopulation == null)
             {
-                initialPopulation.Add(generateValue(min, max));
-            }
+                initialPopulation = new List<TestData>();
+                ServiceTestFunctions service = ServiceTestFunctions.GetInstance();
 
+                double min = service.GetMin();
+                double max = service.GetMax();
+
+                for (int i = 0; i < length; i++)
+                {
+                    ServiceOutput output = ServiceOutput.GetInstance();
+                    output.SetOutput(new OutputFile());
+                    output.Write("j");
+                    initialPopulation.Add(generateValue(min, max));
+                }
+            }
             return initialPopulation;
         }
 

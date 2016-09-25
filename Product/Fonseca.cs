@@ -16,6 +16,20 @@ namespace Product
             this.Min = -4;
             this.DecisionVariablesCount = 2;
         }
+        public override String ToReadableFormat()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Name: Fonseca;");
+            sb.AppendLine("n = 3");
+            sb.AppendLine("Objective functions:");
+            sb.AppendLine("f1(x) = 1 - exp(sqr( - summa (i=1,3) (xi - 1/sqrt(3)))");
+            sb.AppendLine("f1(x) = 1 - exp(sqr( - summa (i=1,3) (xi + 1/sqrt(3)))");
+            sb.AppendLine("Variable bounds: [-4,4]");
+            sb.AppendLine("Optimal solutions: x1=x2=x3;");
+            sb.AppendLine("Comments: nonconvex");
+
+            return sb.ToString();
+        }
         public override double Evaluate(List<double> list)
         {
             double value = 0;
@@ -37,5 +51,7 @@ namespace Product
 
             return value;
         }
+
+       
     }
 }

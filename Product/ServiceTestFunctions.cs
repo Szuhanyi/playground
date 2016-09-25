@@ -26,6 +26,14 @@ namespace Product
         private ServiceTestFunctions()
         { 
             num = 0.0004;
+            
+            functions = new List<ObjectiveFunction>();
+            // for what purpes am I doing this. 
+            functions.Add(new Fonseca(true));
+            functions.Add(new Fonseca(false));
+            numberOfObjectives = functions.First().DecisionVariablesCount; // ?????
+            ServiceOutput sout = ServiceOutput.GetInstance();
+            sout.Write(functions.First().ToReadableFormat());
         }
 
         public static ServiceTestFunctions GetInstance()

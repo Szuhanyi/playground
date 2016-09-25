@@ -6,26 +6,30 @@ using System.Threading.Tasks;
 
 namespace Product
 {
-    class ServiceOutput
+    public class ServiceOutput
     {
         private static ServiceOutput instance;
+        private Output output;
         
         private ServiceOutput()
         {
-
+            output = new OutputStd();
         }
         public static ServiceOutput GetInstance()
         {
-            if(instance != null)
+            if(instance == null)
             {
                 instance = new ServiceOutput();
             }
             return instance;
         }
-
-        internal void Write(string v)
+        public void SetOutput(Output o)
         {
-            throw new NotImplementedException();
+            output = o;
+        }
+        public void Write(string v)
+        {
+            output.Write(v);
         }
 
         internal void Write(Population population)

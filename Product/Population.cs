@@ -43,16 +43,18 @@ namespace Product
          * Returns a new population, which is created by concatenating the two
          * given parameters.
          * */
-        public Population Concat(Population p1, Population p2)
+        public Population Concat(Population p2)
         {
             Population p3 = new Population();
-            foreach(Individual i in p1)
+            foreach (Individual i in this)
             {
                 p3.Add(i);
             }
-            foreach(Individual i in p2)
-            {
-                p3.Add(i);
+            if (p2 != null) {
+                foreach (Individual i in p2)
+                {
+                    p3.Add(i);
+                }
             }
             return p3;
         }
@@ -66,20 +68,24 @@ namespace Product
          * Sorts genom based on Distance 
          * */
         internal void Sort()
-        {            
-            this.genom.Sort();
+        {           
+            if(genom != null)
+            {
+                this.genom.Sort();
+            }             
         }
 
         //concatenats the second one to the first
         internal void ConcatenateTwoExistingPopulations()
         {
-            foreach(Individual i in successor)
+            if (successor != null)
             {
-                genom.Add(i);
+                foreach (Individual i in successor)
+                {
+                    genom.Add(i);
+                }
             }
-        }
-
-      
+        }      
 
         internal void SortBy(int i)
         {
@@ -89,13 +95,19 @@ namespace Product
 
         internal Individual Last()
         {
-            return genom.Last();
-            
+            if (genom != null)
+
+                return genom.Last();
+            else
+                return null;
         }
 
         internal Individual First()
         {
-            return genom.First();
+            if (genom != null)
+                return genom.First();
+            else
+                return null;
         }
 
         /***
@@ -105,15 +117,17 @@ namespace Product
         internal void NextGeneration()
         {           
             successor = new List<Individual>();
-            
-            foreach(Individual i in genom)
+            if (genom != null)
             {
-                successor.Add(new Individual(i));
-            }
+                foreach (Individual i in genom)
+                {
+                    successor.Add(new Individual(i));
+                }
 
-            foreach (GeneticOperator g in genOperator)
-            {
-                g.MakeChange(successor);
+                foreach (GeneticOperator g in genOperator)
+                {
+                    g.MakeChange(successor);
+                }
             }
         }
 
@@ -134,11 +148,14 @@ namespace Product
             {
                 genom = new List<Individual>();
             }
+            int j = 0;
             foreach(TestData t in gen)
             {
+                ServiceOutput.GetInstance().Write((++j).ToString());
                 genom.Add(new Individual(t));
             }                       
         }
+
         public int getPopulationCount()
         {
             if(genom == null)

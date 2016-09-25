@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Product
 {
-    class Sch : MyFunction
+    class OutputStd : Output
     {
+        public void Write(string msg)
+        {
+            Console.Out.Write(msg);
+        }
     }
 }

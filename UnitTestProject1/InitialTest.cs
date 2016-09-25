@@ -14,10 +14,10 @@ namespace UnitTestProject1
         {
             ServiceTestData td = ServiceTestData.getInstance();
             Population population = new Population();
-             population.SetGenom(td.getMockInitialPopulation());
+            population.SetGenom(td.getMockInitialPopulation());
             Assert.AreEqual(10, population.getPopulationCount());
         }
-      
+
         [TestMethod]
         public void IndividualTest()
         {
