@@ -10,12 +10,24 @@ namespace Product
     {
         private static ServiceTestFunctions instance;
 
+        private int numberOfObjectives;
+
         public double Infinite { get; internal set; }
 
-        private ServiceTestFunctions()
-        {
+        private double num;
 
+        private List<ObjectiveFunction> functions;
+
+        public int GetDecisionVariablesCount()
+        {
+            return numberOfObjectives;
         }
+
+        private ServiceTestFunctions()
+        { 
+            num = 0.0004;
+        }
+
         public static ServiceTestFunctions GetInstance()
         {
             if(instance == null)
@@ -25,31 +37,36 @@ namespace Product
             return instance;
         }
 
+        internal double GetMum()
+        {
+            return num;
+        }
+
         internal double GetMin()
         {
-            return 10 ;
+            return functions.First().Min;
         }
 
         internal double GetMax()
         {
-            return 10;
+            return functions.First().Max;
         }
 
         internal int Count()
         {
-            throw new NotImplementedException();
+            return functions.Count;
         }
 
-        internal void SetCurrentFunction(int i)
+        internal void EvaluateObjective(Individual i)
         {
-            throw new NotImplementedException();
-        }
+            //value for each function// cause we do this... and not otherwise... lalla.. alive daft punk
+            i.ObjectiveValue.Clear();
 
-        internal int GetCurrentFunctionIndex()
-        {
-            throw new NotImplementedException();
+            foreach (ObjectiveFunction f in functions)
+            {
+                i.ObjectiveValue.Add(f.Evaluate(i.DecisionVariables));
+            }
+
         }
     }
-
- 
 }

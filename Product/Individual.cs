@@ -9,7 +9,7 @@ namespace Product
         private TestData t;
 
         private Population dominatedSet;
-
+        private List<double> decisionVariables;
         private double[] values;
         private Individual i;
 
@@ -17,7 +17,11 @@ namespace Product
         {
             get { return values; }
         }
-
+        public List<double> DecisionVariables
+        {
+            get { return decisionVariables; }
+            set { decisionVariables = value; }
+        }
         public Individual(TestData t)
         {
             this.t = t;
@@ -35,6 +39,7 @@ namespace Product
         public int DominatedBy { get; internal set; }
         public int Fitness { get; internal set; }
         public double Distance { get;  set; }
+        public List<double> ObjectiveValue { get; internal set; }
 
         public void AddToDominatedSet(Individual i)
         {
@@ -59,7 +64,6 @@ namespace Product
         {
             throw new NotImplementedException();
         }
-
        
         public int CompareTo(Individual other)
         {

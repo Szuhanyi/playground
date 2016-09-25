@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Algorithm.cs" />
     <Compile Include="Crossover.cs" />
+    <Compile Include="Fonseca.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +65,7 @@
     <Compile Include="Mutation.cs" />
     <Compile Include="MyFunction.cs" />
     <Compile Include="Nsga2.cs" />
+    <Compile Include="ObjectiveFunction.cs" />
     <Compile Include="Population.cs" />
     <Compile Include="Pr.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
