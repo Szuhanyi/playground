@@ -33,13 +33,13 @@ namespace Product
 
                 double min = service.GetMin();
                 double max = service.GetMax();
-
+                int n = service.GetDecisionVariablesCount();
                 for (int i = 0; i < length; i++)
                 {
                     ServiceOutput output = ServiceOutput.GetInstance();
                     output.SetOutput(new OutputFile());
                     output.Write("j");
-                    initialPopulation.Add(generateValue(min, max));
+                    initialPopulation.Add(generateValue(min, max, n));
                 }
             }
             return initialPopulation;
@@ -51,9 +51,16 @@ namespace Product
             return getMockInitialPopulation(defaultPopulationCount);
         }
 
-        private TestData generateValue(double min, double max)
+        private TestData generateValue(double min, double max, int n)
         {
-            return new TestData(min);
+            List<double> data = new List<double>();
+            
+            Random rand = new Random();
+            for (int j = 0; j < n; j++)
+            {
+                data.Add(min + (max - min) * rand.NextDouble());
+            }
+            return new TestData(data);
         }
     }
 }

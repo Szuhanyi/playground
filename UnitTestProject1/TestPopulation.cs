@@ -21,6 +21,42 @@ namespace UnitTestProject1
             pop2.SetGenom(td.getMockInitialPopulation());
             Population pop3 = pop.Concat(pop2);
             Assert.AreEqual(20, pop3.getPopulationCount());
+            
+        }
+
+        [TestMethod]
+        public void MockDataTest()
+        {
+            ServiceTestData svd = ServiceTestData.getInstance();
+            Population p = new Population();
+            p.SetGenom(svd.getMockInitialPopulation());
+
+            Assert.AreEqual(10, p.getPopulationCount());
+            ServiceTestFunctions tf = ServiceTestFunctions.GetInstance();
+            foreach(Individual i in p)
+            {
+                Assert.AreEqual(tf.GetDecisionVariablesCount(), i.DecisionVariables.Count);
+            }
+        }
+
+        [TestMethod]
+        public void GenerationTest()
+        {
+            ServiceTestData svd = ServiceTestData.getInstance();
+            Population p = new Population();
+            p.SetGenom(svd.getMockInitialPopulation());
+
+            p.NextGeneration();
+
+            p.ConcatenateTwoExistingPopulations();
+            Assert.AreEqual(20, p.getPopulationCount());
+
+            ServiceOutput so = ServiceOutput.GetInstance();
+            so.SetOutput(new OutputStd());
+            //
+            //so.SetOutput(new OutputFile())
+            so.Write(p.ToReadableFormat());
+            Console.WriteLine("asdf");
 
         }
     }

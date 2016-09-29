@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace Product
 {
-    class Mutation : GeneticOperator
+    public class Mutation : GeneticOperator
     {
         private ServiceTestFunctions functions;
 
         public Mutation()
         {
             functions = ServiceTestFunctions.GetInstance();
+            probability = 0.5;
         }
 
         protected override void DoSm(Individual i)

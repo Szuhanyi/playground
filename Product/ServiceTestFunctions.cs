@@ -32,8 +32,8 @@ namespace Product
             functions.Add(new Fonseca(true));
             functions.Add(new Fonseca(false));
             numberOfObjectives = functions.First().DecisionVariablesCount; // ?????
-            ServiceOutput sout = ServiceOutput.GetInstance();
-            sout.Write(functions.First().ToReadableFormat());
+           // ServiceOutput sout = ServiceOutput.GetInstance();
+            //sout.Write(functions.First().ToReadableFormat());
         }
 
         public static ServiceTestFunctions GetInstance()

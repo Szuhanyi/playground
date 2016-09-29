@@ -17,6 +17,8 @@ namespace Product
         public Population()
         {
             genom = new List<Individual>();
+            genOperator = new List<GeneticOperator>();
+            genOperator.Add(new Mutation());
         }   
         
         public String ToReadableFormat()
@@ -25,7 +27,7 @@ namespace Product
 
             foreach(Individual i in genom)
             {
-                sb.Append(i.ToString());
+                sb.AppendLine(i.ToString());
             }
             return sb.ToString();
         }
@@ -76,7 +78,7 @@ namespace Product
         }
 
         //concatenats the second one to the first
-        internal void ConcatenateTwoExistingPopulations()
+        public void ConcatenateTwoExistingPopulations()
         {
             if (successor != null)
             {
@@ -114,7 +116,7 @@ namespace Product
          * this method should generate another genom, by applying genetic operators 
          * 
          * */
-        internal void NextGeneration()
+        public void NextGeneration()
         {           
             successor = new List<Individual>();
             if (genom != null)

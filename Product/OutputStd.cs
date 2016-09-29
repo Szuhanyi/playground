@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Product
 {
-    class OutputStd : Output
+    public class OutputStd : Output
     {
         public void Write(string msg)
         {

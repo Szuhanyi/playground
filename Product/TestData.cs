@@ -1,17 +1,19 @@
 ﻿
+using System.Collections.Generic;
+
 namespace Product
 {
     public class TestData
     {
-        private double min;
+        private List<double> value;
 
-        public TestData(double min)
+        public TestData(List<double> value)
         {
-            this.min = min;
+            this.value = value;
         }
-        public double GetValue()
+        public List<double> GetData()
         {
-            return min;
+            return value;
         }
     }
 }

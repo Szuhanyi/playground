@@ -15,6 +15,7 @@ namespace Product
             this.Max = 4;
             this.Min = -4;
             this.DecisionVariablesCount = 2;
+            
         }
         public override String ToReadableFormat()
         {

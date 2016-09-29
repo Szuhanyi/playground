@@ -7,39 +7,61 @@ namespace Product
     public class Individual : IComparable<Individual>
     {
         private TestData t;
-
         private Population dominatedSet;
         private List<double> decisionVariables;
         private double[] values;
-        private Individual i;
-
+        private List<double> objectiveValue;
         public double[] Values
         {
             get { return values; }
+            set { values = value; }
         }
+
         public List<double> DecisionVariables
         {
-            get { return decisionVariables; }
+            get {
+                    if(decisionVariables == null)
+                {
+                    decisionVariables = new List<double>();
+                }
+                return decisionVariables;
+            }
             set { decisionVariables = value; }
         }
-        public Individual(TestData t)
+
+        public Individual(TestData t) 
         {
-            this.t = t;
+            decisionVariables = new List<double>();
+            decisionVariables = t.GetData();
         }
 
         public Individual()
         {
+            decisionVariables = new List<double>();
         }
 
         public Individual(Individual i)
         {
-            this.i = i;
+            this.DecisionVariables = i.DecisionVariables;
+            this.Distance = i.Distance;
+            this.DominatedBy = i.DominatedBy;
+            this.Fitness = i.Fitness;
+            this.Values = i.Values;
         }
 
         public int DominatedBy { get; internal set; }
         public int Fitness { get; internal set; }
         public double Distance { get;  set; }
-        public List<double> ObjectiveValue { get; internal set; }
+        public List<double> ObjectiveValue {
+            get {
+                if (objectiveValue == null)
+                {
+                    objectiveValue = new List<double>();
+                }
+                    return objectiveValue;
+                }
+            set { objectiveValue = value; }
+        }
 
         public void AddToDominatedSet(Individual i)
         {
@@ -65,6 +87,7 @@ namespace Product
             throw new NotImplementedException();
         }
        
+
         public int CompareTo(Individual other)
         {
             // A null value means that this object is greater

@@ -5,7 +5,7 @@ namespace Product
 {
      public abstract class GeneticOperator
     {
-        private double probability;
+        protected double probability;
 
         public void MakeChange(List<Individual> successor)
         {
