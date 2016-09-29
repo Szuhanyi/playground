@@ -10,10 +10,16 @@ namespace Product
     {
         private  List<TestData> initialPopulation;
         private static ServiceTestData instance;
+        private Random rand;
+
+        public int GetPopulationCount()
+        {
+            return initialPopulation.Count;
+        }
 
         private ServiceTestData()
         {
-            
+            rand = new Random();   
         }
         public static ServiceTestData getInstance()
         {
@@ -36,10 +42,10 @@ namespace Product
                 int n = service.GetDecisionVariablesCount();
                 for (int i = 0; i < length; i++)
                 {
-                    ServiceOutput output = ServiceOutput.GetInstance();
-                    output.SetOutput(new OutputFile());
-                    output.Write("j");
-                    initialPopulation.Add(generateValue(min, max, n));
+                    //ServiceOutput output = ServiceOutput.GetInstance();
+                    //output.SetOutput(new OutputFile());
+                    //output.Write("j");
+                    initialPopulation.Add(generateValue(min, max, n, i));
                 }
             }
             return initialPopulation;
@@ -47,20 +53,19 @@ namespace Product
 
         public List<TestData> getMockInitialPopulation()
         {
-            int defaultPopulationCount = 10;
+            int defaultPopulationCount = 15;
             return getMockInitialPopulation(defaultPopulationCount);
         }
 
-        private TestData generateValue(double min, double max, int n)
+        private TestData generateValue(double min, double max, int n, int id)
         {
             List<double> data = new List<double>();
-            
-            Random rand = new Random();
+        
             for (int j = 0; j < n; j++)
             {
                 data.Add(min + (max - min) * rand.NextDouble());
             }
-            return new TestData(data);
+            return new TestData(data, id);
         }
     }
 }

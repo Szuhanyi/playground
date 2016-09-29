@@ -9,13 +9,18 @@ namespace Product
     {
         private Population dominatedSet;
         private List<double> decisionVariables;
-        private double[] values;
+        private double distance;
         private List<double> objectiveValue;
-        public double[] Values
-        {
-            get { return values; }
-            set { values = value; }
-        }
+        private int id;
+        //public double[] Values
+        //{
+        //    get { if(values == null)
+        //        {
+        //            values = new double[decisionVariables.Count];
+        //        }
+        //        return values; }
+        //    set { values = value; }
+        // }
 
         public List<double> DecisionVariables
         {
@@ -33,6 +38,7 @@ namespace Product
         {
             decisionVariables = new List<double>();
             decisionVariables = t.GetData();
+            id = t.Id;
         }
 
         public Individual()
@@ -46,12 +52,14 @@ namespace Product
             this.Distance = i.Distance;
             this.DominatedBy = i.DominatedBy;
             this.Fitness = i.Fitness;
-            this.Values = i.Values;
+            
         }
 
         public int DominatedBy { get; internal set; }
         public int Fitness { get; internal set; }
-        public double Distance { get;  set; }
+        public double Distance { get { return distance; }  set { distance = value; } }
+        public int Id { get { return id; } set { id = value; } }
+
         public List<double> ObjectiveValue {
             get {
                 if (objectiveValue == null)
@@ -79,17 +87,43 @@ namespace Product
 
         internal bool Dominates(Individual q)
         {
-            throw new NotImplementedException();
+            int counter = 0;
+            bool dominates = false;
+            for (int i = 0; i < this.objectiveValue.Count; i++)
+            {
+                if (this.ObjectiveValue[i] <= q.ObjectiveValue[i])
+                {
+                    counter++;
+                }
+            }
+            if (counter == objectiveValue.Count)
+            {
+                for (int i = 0; i < objectiveValue.Count; i++)
+                {
+                    if (this.objectiveValue[i] < q.ObjectiveValue[i])
+                    {
+                        dominates = true;
+                    }
+                }
+            }
+            return dominates;
         }
 
         internal Population getDominatedSet()
         {
-            throw new NotImplementedException();
+            if(dominatedSet == null)
+            {
+                dominatedSet = new Population();
+            }
+            return this.dominatedSet;
         }
        
         public String ToReadableFormat()
         {
             StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine("Id:");
+            sb.AppendLine(id.ToString());
             if (DecisionVariables != null)
             {
                 sb.AppendLine("Decision Variables");
@@ -104,7 +138,7 @@ namespace Product
             }
          
                 sb.AppendLine("Distance");
-                sb.AppendLine(this.Distance.ToString());
+                sb.AppendLine(this.distance.ToString());
 
             
 
@@ -116,10 +150,10 @@ namespace Product
                 sb.AppendLine("Dominated set:");
                 sb.AppendLine(dominatedSet.getPopulationCount().ToString());
             }
-            if (values != null)
+            if (objectiveValue != null)
             {
                 sb.AppendLine("Values:");
-                foreach (double d in values)
+                foreach (double d in this.objectiveValue)
                 {
                     sb.Append(d);
                     sb.Append(", ");

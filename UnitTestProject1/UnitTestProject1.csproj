@@ -55,6 +55,7 @@
     <Compile Include="InitialTest.cs" />
     <Compile Include="TestPopulation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Product\Product.csproj">

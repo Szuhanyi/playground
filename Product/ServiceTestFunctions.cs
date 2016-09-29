@@ -26,7 +26,7 @@ namespace Product
         private ServiceTestFunctions()
         { 
             num = 0.0004;
-            
+            Infinite = 1000;
             functions = new List<ObjectiveFunction>();
             // for what purpes am I doing this. 
             functions.Add(new Fonseca(true));
@@ -65,7 +65,7 @@ namespace Product
             return functions.Count;
         }
 
-        internal void EvaluateObjective(Individual i)
+        public void EvaluateObjective(Individual i)
         {
             //value for each function// cause we do this... and not otherwise... lalla.. alive daft punk
             i.ObjectiveValue.Clear();

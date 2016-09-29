@@ -11,16 +11,18 @@ namespace UnitTestProject1
         public void PopulationTest()
         {
             Population pop = new Population();            
+           
             Assert.AreEqual(0, pop.getPopulationCount());
 
             ServiceTestData td = ServiceTestData.getInstance();            
             pop.SetGenom(td.getMockInitialPopulation(10));            
-            Assert.AreEqual(10, pop.getPopulationCount());
+            Assert.AreEqual(td.GetPopulationCount(), pop.getPopulationCount());
 
             Population pop2 = new Population();
             pop2.SetGenom(td.getMockInitialPopulation());
             Population pop3 = pop.Concat(pop2);
-            Assert.AreEqual(20, pop3.getPopulationCount());
+            Assert.AreEqual(2 * td.GetPopulationCount(),
+                pop3.getPopulationCount());
             
         }
 
@@ -31,7 +33,7 @@ namespace UnitTestProject1
             Population p = new Population();
             p.SetGenom(svd.getMockInitialPopulation());
 
-            Assert.AreEqual(10, p.getPopulationCount());
+            Assert.AreEqual(svd.GetPopulationCount(), p.getPopulationCount());
             ServiceTestFunctions tf = ServiceTestFunctions.GetInstance();
             foreach(Individual i in p)
             {
@@ -49,7 +51,7 @@ namespace UnitTestProject1
             p.NextGeneration();
 
             p.ConcatenateTwoExistingPopulations();
-            Assert.AreEqual(20, p.getPopulationCount());
+            Assert.AreEqual(2 * svd.GetPopulationCount(), p.getPopulationCount());
 
             ServiceOutput so = ServiceOutput.GetInstance();
             so.SetOutput(new OutputStd());
@@ -59,12 +61,7 @@ namespace UnitTestProject1
             Console.WriteLine("asdf");
         }
 
-        [TestMethod]
-        public void Nsga2Test()
-        {
-            Algorithm a = new Nsga2();
-
-        }
+       
 
     }
 }

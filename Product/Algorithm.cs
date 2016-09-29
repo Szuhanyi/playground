@@ -8,7 +8,8 @@ namespace Product
 {
     public interface Algorithm
     {
-        void ExecuteSelection(Population population);
-        void Rank(Population population);
+        void SetPopulation(Population p);
+        void ExecuteSelection();
+        void Rank();
     }
 }

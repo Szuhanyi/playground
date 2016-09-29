@@ -13,14 +13,24 @@ namespace Product
         private List<Individual> genom;
         private List<GeneticOperator> genOperator;
         private List<Individual> successor;
+        
 
         public Population()
         {
             genom = new List<Individual>();
             genOperator = new List<GeneticOperator>();
             genOperator.Add(new Mutation());
-        }   
-        
+        }
+
+        public Population(HashSet<Individual> g)
+        {
+            genom = new List<Individual>();
+            foreach(Individual i in g)
+            {
+                genom.Add(i);
+            }
+        }
+
         public String ToReadableFormat()
         {
             StringBuilder sb = new StringBuilder();
@@ -91,7 +101,21 @@ namespace Product
 
         internal void SortBy(int i)
         {
-            genom.OrderBy(x => x.Values[i]);            
+             //genom.OrderBy(x => x.ObjectiveValue[i]);            
+             for(int j = 0; j < genom.Count; j++)
+            {
+                for(int k = 0; k < genom.Count; k++)
+                {
+                    if(genom.ElementAt(j).DecisionVariables[i] 
+                        < genom.ElementAt(k).DecisionVariables[i])
+                    {
+                        Individual t = null;
+                        t = genom.ElementAt(j);
+                        genom[j] = genom[k];
+                        genom[k] = t;
+                    }
+                }
+            }
         }
 
 
@@ -153,7 +177,7 @@ namespace Product
             int j = 0;
             foreach(TestData t in gen)
             {
-                ServiceOutput.GetInstance().Write((++j).ToString());
+               // ServiceOutput.GetInstance().Write((++j).ToString());
                 genom.Add(new Individual(t));
             }                       
         }

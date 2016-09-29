@@ -33,7 +33,8 @@ namespace Product
 
             output.Write("Starting new evolution. Iteration count : " 
                 + iterationCount);
-            
+            algorithm.SetPopulation(population);
+
             for (int i = 0; i < iterationCount; i++)
             {
                 population.NextGeneration();
@@ -41,11 +42,11 @@ namespace Product
 
                 population.ConcatenateTwoExistingPopulations();
                 output.Write(population);
-
-                algorithm.Rank(population);
+               
+                algorithm.Rank();
                 output.Write(population);
 
-                algorithm.ExecuteSelection(population);
+                algorithm.ExecuteSelection();
                 output.Write(population);
 
                 output.Write(i + 1 +"th  iteration. \r\n");

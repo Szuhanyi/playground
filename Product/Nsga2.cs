@@ -8,50 +8,42 @@ namespace Product
 {
     public class Nsga2 : Algorithm
     {
-        private List<Population> ranking;        
+        private List<Population> ranking;
+        private Population population;
         
-        public Nsga2()
-        {
-        }
-
-
-        public void Sort(Population p)
+        private void Sort()
         {
             //sorts by the aggregated disatance value
-            p.Sort();
+            population.Sort();
         }
-        
         
         //The ranking property must be initialized, and filled up with values,
         //by the Rank(p) method.
-        public void ExecuteSelection(Population population)
+        // use crodwing distance assignment, in order to obtain
+        // better dispersion (what ?)
+        
+        public void ExecuteSelection()
         {
-            // use crodwing distance assignment, in order to obtain
-            // better dispersion (what ?)
-            if (ranking == null)
-            {
-                ranking = new List<Population>();
-                Rank(population);
-            }
-            ExecuteSelection();
-        }
+            //if (ranking == null)
+            //{
+            //    ranking = new List<Population>();
+            //    Rank();
+            //}
 
-        private void ExecuteSelection()
-        {
             ServiceTestFunctions tf = ServiceTestFunctions.GetInstance();
            
             //iterate through all the fronts
             foreach(Population front in ranking)
             {
                 //sort front 
-                foreach(Individual i in front)
-                {
-                    i.Distance = 0;
-                }
-
+                //foreach(Individual i in front)
+                //{
+                //    i.Distance = 0;
+                //}
+                ServiceOutput o = ServiceOutput.GetInstance();
+                
                 for (int i = 0; i < tf.Count(); i++)
                 {
-
                     //tf.SetCurrentFunction(i);
                     //// sort by the i-th objective function
 
@@ -68,38 +60,37 @@ namespace Product
 
                     var en = front.GetEnumerator();
 
-                    en.MoveNext();
-                    Individual prev =(Individual) en.Current;
-
-                    while (en.MoveNext())
+                    //en.MoveNext();
+                    if (en.MoveNext())
                     {
-                        Individual c =(Individual)en.Current;
-                        //in case this is the last element
+                        Individual prev = (Individual)en.Current;
+
                         if (en.MoveNext())
                         {
-                            Individual next = (Individual)en.Current;
-                            c.Distance += Math.Abs(next.Values[i] - prev.Values[i])
-                                / (tf.GetMax() - tf.GetMin());
+                            Individual current = (Individual)en.Current;
+                            while (en.MoveNext())
+                            {
+                                //in case this is the last element
+                                Individual next = (Individual)en.Current;
+
+                                current.Distance += Math.Abs(next.ObjectiveValue[i] - prev.ObjectiveValue[i])
+                                       / (tf.GetMax() - tf.GetMin());
+                                prev = current;
+                                current = next;
+                            }
                         }
                     }
-                    //for (int i = 1; i < sortedList.Count - 1; i++)
-                    //{
-                    //    sortedList.ElementAt(i).Distance =
-                    //        sortedList.ElementAt(i).Distance
-                    //        + Math.Abs(front.ElementAt(i + 1).ObjectiveValue[j] - sortedList.ElementAt(i - 1).
-                    //ObjectiveValue[j])
-                    //            / (functions.GetUpperThreshold() - functions.GetLowerThreshold());
-                    //}
-
                 }
             }
-            
-        }
 
-        public void Rank(Population population)
+            Sort();
+        }
+                
+        public void Rank()
         {
 
             ranking = new List<Population>();
+            ranking.Add(new Population());
             // need to order the populaton 
             // first and foremost
             // fast non dominated sorting algorithm
@@ -108,26 +99,25 @@ namespace Product
             foreach (Individual p in population)
             {
                 p.DominatedBy = 0;
-                foreach(Individual q in population)
+                foreach (Individual q in population)
                 {
-                    if (!p.Equals(q))
+                    if (p.Dominates(q))
                     {
-                        if (p.Dominates(q))
-                        {
-                            p.AddToDominatedSet(q);
-                        }
-                        else
+                        p.AddToDominatedSet(q);
+                    }
+                    else
+                    {
+                        if (q.Dominates(p))
                         {
                             p.DominatedBy++;
                         }
                     }
                 }
+                
                 if(p.DominatedBy == 0)
                 {
-                    ranking.ElementAt(0).Add(p);
-                    
+                    ranking.ElementAt(0).Add(p);                    
                 }
-
             }
 
             int i = 0;
@@ -136,27 +126,31 @@ namespace Product
             // else, there are no other fronts
             while(front.getPopulationCount() > 0)
             {
-                Population nextFront = new Population();
+                var nextFront = new HashSet<Individual>();
                 foreach(Individual p in front)
                 {
                     foreach(Individual q in p.getDominatedSet())
                     {
                         q.DominatedBy--;
                         if(q.getDominatedSet().getPopulationCount() == 0)
-                        {
+                        {   
                             nextFront.Add(q);
                             q.Fitness = i;
                         }
                     }
                 }
                 i++;
-                ranking.Add(nextFront);
-                front = nextFront;
+                ranking.Add(new Population(nextFront));
+                front = ranking.Last();
             }
             // i hope this removes the empty (last) front
             ranking.Remove(front); 
         }
 
-      
+        public void SetPopulation(Population p)
+        {
+            this.population = p;
+        }
+         
     }
 }
