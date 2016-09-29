@@ -27,7 +27,7 @@ namespace Product
 
             foreach(Individual i in genom)
             {
-                sb.AppendLine(i.ToString());
+                sb.AppendLine(i.ToReadableFormat());
             }
             return sb.ToString();
         }

@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Product
 {
-    class Nsga2 : Algorithm
+    public class Nsga2 : Algorithm
     {
-        private List<Population> ranking;
-        
+        private List<Population> ranking;        
         
         public Nsga2()
         {

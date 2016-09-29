@@ -57,7 +57,14 @@ namespace UnitTestProject1
             //so.SetOutput(new OutputFile())
             so.Write(p.ToReadableFormat());
             Console.WriteLine("asdf");
+        }
+
+        [TestMethod]
+        public void Nsga2Test()
+        {
+            Algorithm a = new Nsga2();
 
         }
+
     }
 }

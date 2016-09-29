@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Product
 {
     public class Individual : IComparable<Individual>
     {
-        private TestData t;
         private Population dominatedSet;
         private List<double> decisionVariables;
         private double[] values;
@@ -87,7 +87,48 @@ namespace Product
             throw new NotImplementedException();
         }
        
+        public String ToReadableFormat()
+        {
+            StringBuilder sb = new StringBuilder();
+            if (DecisionVariables != null)
+            {
+                sb.AppendLine("Decision Variables");
 
+                foreach (double d in decisionVariables)
+                {
+                    sb.Append(d);
+                    sb.Append(", ");
+
+                }
+                sb.Append("\r\n");
+            }
+         
+                sb.AppendLine("Distance");
+                sb.AppendLine(this.Distance.ToString());
+
+            
+
+            sb.AppendLine("Dominated by:");
+            sb.AppendLine(DominatedBy.ToString());
+
+            if (dominatedSet != null)
+            {
+                sb.AppendLine("Dominated set:");
+                sb.AppendLine(dominatedSet.getPopulationCount().ToString());
+            }
+            if (values != null)
+            {
+                sb.AppendLine("Values:");
+                foreach (double d in values)
+                {
+                    sb.Append(d);
+                    sb.Append(", ");
+                }
+                sb.Append("\r\n");
+            }
+
+            return sb.ToString();
+        }
         public int CompareTo(Individual other)
         {
             // A null value means that this object is greater
