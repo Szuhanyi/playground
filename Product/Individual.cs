@@ -12,15 +12,6 @@ namespace Product
         private double distance;
         private List<double> objectiveValue;
         private int id;
-        //public double[] Values
-        //{
-        //    get { if(values == null)
-        //        {
-        //            values = new double[decisionVariables.Count];
-        //        }
-        //        return values; }
-        //    set { values = value; }
-        // }
 
         public List<double> DecisionVariables
         {
@@ -52,7 +43,6 @@ namespace Product
             this.Distance = i.Distance;
             this.DominatedBy = i.DominatedBy;
             this.Fitness = i.Fitness;
-            
         }
 
         public int DominatedBy { get; internal set; }
@@ -61,14 +51,18 @@ namespace Product
         public int Id { get { return id; } set { id = value; } }
 
         public List<double> ObjectiveValue {
-            get {
+            get
+            {
                 if (objectiveValue == null)
                 {
                     objectiveValue = new List<double>();
                 }
                     return objectiveValue;
                 }
-            set { objectiveValue = value; }
+            set
+            {
+                objectiveValue = value;
+            }
         }
 
         public void AddToDominatedSet(Individual i)
@@ -89,22 +83,25 @@ namespace Product
         {
             int counter = 0;
             bool dominates = false;
-            for (int i = 0; i < this.objectiveValue.Count; i++)
+            for (int i = 0; i < ObjectiveValue.Count; i++)
             {
+                double def = this.ObjectiveValue[i] - q.ObjectiveValue[i];
                 if (this.ObjectiveValue[i] <= q.ObjectiveValue[i])
                 {
                     counter++;
                 }
             }
-            if (counter == objectiveValue.Count)
+            if (counter == ObjectiveValue.Count)
             {
-                for (int i = 0; i < objectiveValue.Count; i++)
-                {
-                    if (this.objectiveValue[i] < q.ObjectiveValue[i])
-                    {
+                // 
+                //for (int i = 0; i < objectiveValue.Count; i++)
+                //{
+                //    double def = this.objectiveValue[i] - q.ObjectiveValue[i];
+                //    if (this.objectiveValue[i] < q.ObjectiveValue[i])
+                //    {
                         dominates = true;
-                    }
-                }
+                //    }
+                //}
             }
             return dominates;
         }

@@ -13,6 +13,7 @@ namespace Product
         private int numberOfObjectives;
 
         public double Infinite { get; internal set; }
+        public double Delta { get; internal set; }
 
         private double num;
 
@@ -24,7 +25,8 @@ namespace Product
         }
 
         private ServiceTestFunctions()
-        { 
+        {
+            Delta = 0.00001;
             num = 0.0004;
             Infinite = 1000;
             functions = new List<ObjectiveFunction>();

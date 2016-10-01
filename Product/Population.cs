@@ -71,6 +71,11 @@ namespace Product
             return p3;
         }
 
+        internal List<Individual> GetGenom()
+        {
+            return this.genom;
+        }
+
         public void setAlgorithm(Algorithm alg)
         {
             algorithm = alg;   

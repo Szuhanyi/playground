@@ -14,9 +14,9 @@ namespace UnitTestProject1
             Algorithm a = new Nsga2();
             ServiceTestData td = ServiceTestData.getInstance();
             Population p = new Population();
-            var asdf = td.getMockInitialPopulation(50);           
+            var asdf = td.getMockInitialPopulation(3);           
 
-            p.SetGenom(td.getMockInitialPopulation(50));
+            p.SetGenom(td.getMockInitialPopulation(3));
 
             ServiceTestFunctions tf = ServiceTestFunctions.GetInstance();
 
@@ -39,6 +39,23 @@ namespace UnitTestProject1
             {
                 so.Write(i.ToReadableFormat());
             }
+
+        }
+
+        [TestMethod]
+        public void FastNonDominatedSortTest()
+        {
+
+        }
+        [TestMethod]
+        public void SortByITest()
+        {
+
+        }
+
+        [TestMethod]
+        public void SelectionTest()
+        {
 
         }
     }

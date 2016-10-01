@@ -24,125 +24,105 @@ namespace Product
         
         public void ExecuteSelection()
         {
-            //if (ranking == null)
-            //{
-            //    ranking = new List<Population>();
-            //    Rank();
-            //}
-
             ServiceTestFunctions tf = ServiceTestFunctions.GetInstance();
-           
             //iterate through all the fronts
             foreach(Population front in ranking)
             {
                 //sort front 
-                //foreach(Individual i in front)
-                //{
-                //    i.Distance = 0;
-                //}
+                foreach(Individual i in front)
+                {
+                    i.Distance = 0;
+                }
                 ServiceOutput o = ServiceOutput.GetInstance();
-                
                 for (int i = 0; i < tf.Count(); i++)
                 {
-                    //tf.SetCurrentFunction(i);
-                    //// sort by the i-th objective function
-
-                    //front.Sort();
-
-                    //an alternative
-
+                    List<Individual> genom = front.GetGenom();
                     front.SortBy(i);
-                    front.First().Distance = tf.Infinite;
-                    front.Last().Distance = tf.Infinite;
-                    //List<Solution> sortedList = SortObjective(front, j);
-                    // sortedList.First().Distance = infinite;
-                    //sortedList.Last().Distance = infinite;
-
-                    var en = front.GetEnumerator();
-
-                    //en.MoveNext();
-                    if (en.MoveNext())
+                    genom[0].Distance = tf.Infinite;
+                    genom[genom.Count-1].Distance = tf.Infinite;
+                    for(int j = 1; j < genom.Count - 1; j++)
                     {
-                        Individual prev = (Individual)en.Current;
-
-                        if (en.MoveNext())
-                        {
-                            Individual current = (Individual)en.Current;
-                            while (en.MoveNext())
-                            {
-                                //in case this is the last element
-                                Individual next = (Individual)en.Current;
-
-                                current.Distance += Math.Abs(next.ObjectiveValue[i] - prev.ObjectiveValue[i])
-                                       / (tf.GetMax() - tf.GetMin());
-                                prev = current;
-                                current = next;
-                            }
-                        }
+                        genom[j].Distance += Math.Abs(genom[j + 1].ObjectiveValue[i] - genom[j - 1].ObjectiveValue[i]) 
+                            / (tf.GetMax() - tf.GetMin());
                     }
                 }
             }
-
-            Sort();
         }
                 
         public void Rank()
         {
-
             ranking = new List<Population>();
             ranking.Add(new Population());
-            // need to order the populaton 
-            // first and foremost
-            // fast non dominated sorting algorithm
-            // It is ordered in a way that no other is
-            // it is ordere 
             foreach (Individual p in population)
             {
                 p.DominatedBy = 0;
                 foreach (Individual q in population)
                 {
-                    if (p.Dominates(q))
+                    if (!p.Equals(q))
                     {
-                        p.AddToDominatedSet(q);
-                    }
-                    else
-                    {
-                        if (q.Dominates(p))
+                        if (p.Dominates(q))
                         {
-                            p.DominatedBy++;
+                            p.AddToDominatedSet(q);
+                        }
+                        else
+                        {
+                            if (q.Dominates(p))
+                            {
+                                p.DominatedBy++;
+                            }
                         }
                     }
+                    
                 }
-                
                 if(p.DominatedBy == 0)
                 {
-                    ranking.ElementAt(0).Add(p);                    
+                    ranking[0].Add(p);                    
                 }
             }
 
             int i = 0;
-            Population front = ranking.ElementAt(i);
+            Population front = ranking[0];
             // do until nextFront has elements
             // else, there are no other fronts
-            while(front.getPopulationCount() > 0)
+
+            while (front.getPopulationCount() > 0)
             {
-                var nextFront = new HashSet<Individual>();
+                var nextFront = new Population(); 
                 foreach(Individual p in front)
                 {
                     foreach(Individual q in p.getDominatedSet())
                     {
                         q.DominatedBy--;
-                        if(q.getDominatedSet().getPopulationCount() == 0)
+                        if(q.getDominatedSet().getPopulationCount() <= 0)
                         {   
                             nextFront.Add(q);
-                            q.Fitness = i;
+                            q.Fitness = i + 1;
                         }
                     }
                 }
                 i++;
-                ranking.Add(new Population(nextFront));
+                ranking.Add(nextFront);
                 front = ranking.Last();
             }
+            //int i = 0;
+            //List<Solution> front = rankings.GetFront(i);
+            //while (front.Count > 0)
+            //{
+            //    foreach (Solution p in front)
+            //    {
+            //        foreach (Solution q in p.DominatedSolutions)
+            //        {
+            //            q.DominationCount--;
+            //            if (q.DominationCount == 0)
+            //            {
+            //                rankings.AddIndividual(i + 1, q);
+            //            }
+            //        }
+            //    }
+            //    i++;
+            //    front = rankings.GetFront(i);
+            //}
+
             // i hope this removes the empty (last) front
             ranking.Remove(front); 
         }
