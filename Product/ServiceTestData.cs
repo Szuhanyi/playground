@@ -42,9 +42,6 @@ namespace Product
                 int n = service.GetDecisionVariablesCount();
                 for (int i = 0; i < length; i++)
                 {
-                    //ServiceOutput output = ServiceOutput.GetInstance();
-                    //output.SetOutput(new OutputFile());
-                    //output.Write("j");
                     initialPopulation.Add(generateValue(min, max, n, i));
                 }
             }

@@ -13,6 +13,7 @@ namespace Product
             get { return id; }
             set { id = value; }
         }
+
         public TestData(List<double> value)
         {
             this.value = value;

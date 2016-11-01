@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Product;
+using System.Collections.Generic;
 
 namespace UnitTestProject1
 {
@@ -45,6 +46,12 @@ namespace UnitTestProject1
         [TestMethod]
         public void FastNonDominatedSortTest()
         {
+            Nsga2 alg = new Nsga2();
+            Population pop = new Population();
+            List<TestData> list = new List<TestData>();
+            List<double> value = new List<double>();
+            list.Add(new TestData(value, 0));
+
 
         }
         [TestMethod]

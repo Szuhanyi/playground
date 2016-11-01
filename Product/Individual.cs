@@ -27,7 +27,7 @@ namespace Product
 
         public Individual(TestData t) 
         {
-            decisionVariables = new List<double>();
+            //decisionVariables = new List<double>();
             decisionVariables = t.GetData();
             id = t.Id;
         }

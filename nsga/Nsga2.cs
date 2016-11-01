@@ -9,7 +9,7 @@ namespace nsga
     public class Nsga2 : Algorithm
     {        
         private Ranking rankings;
-        private void FastNonDominatedSort(Population genom)
+        public void FastNonDominatedSort(Population genom)
         {
             genom.EvaluateObjectiveFunctions();
             List<Solution> population = new List<Solution>();
