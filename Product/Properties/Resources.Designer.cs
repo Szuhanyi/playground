@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Product.Properties
+namespace Newest.Properties
 {
 
 

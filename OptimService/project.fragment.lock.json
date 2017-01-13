@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "exports": {
+    "AlgDll/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5.2",
+      "compile": {
+        "bin/Debug/AlgDll.dll": {}
+      },
+      "runtime": {
+        "bin/Debug/AlgDll.dll": {}
+      },
+      "contentFiles": {
+        "bin/Debug/AlgDll.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    }
+  }
+}

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Product
+namespace Newest
 {
     public class Individual : IComparable<Individual>
     {

@@ -1,4 +1,4 @@
-﻿namespace Product
+﻿namespace Newest
 {
     partial class Form1
     {
