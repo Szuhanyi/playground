@@ -9,6 +9,7 @@ namespace Newest.source
         {
             gl = GlobalValues.GetInstance();
         }
+
         internal Individual Mutate(Individual ind1, Individual ind2)
         {
             Individual ind3 = new Individual();

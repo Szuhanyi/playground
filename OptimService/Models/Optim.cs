@@ -15,6 +15,7 @@ namespace OptimService.Models
                 data.InitWithTestData();
             }
             Solution result = null;
+
             //Should i use the factory pattern here ?
             // Standard client scenerio 
               // Client logs in into the client app
@@ -32,8 +33,25 @@ namespace OptimService.Models
              //         Recieves a great pleasure from the server 
              //
 
-        
+        // other scenerios: 
+        // what do i need to implement I here:
+        // restful api.. so need to implement crud operations.
 
+
+
+            // Post: it is linked to creating resources
+            // so in a post method we are going to publish test functions
+            // like.. On ui. There will be a form, which would record the creation of a new TestFunction
+            // and then sent by the the Post method.
+            // after the, we could request the pareto front from the given function
+            
+
+            // Creating Problem objects.: they contain multiple test functions, and values
+            // 
+
+            // all of these things should be stateless... so no need for registering any user sessions
+            //all connections must be anonymus ? do they really ? 
+            
 
             Algorithm alg = new Nsga2();
 

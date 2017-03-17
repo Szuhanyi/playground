@@ -15,8 +15,21 @@ namespace OptimService.Controllers
         public IEnumerable<string> Get()
         {
             Optimizer o = new Optim();            
-            return new string[] { "value1", o.Optimize() };
+            return new string[] { "value1", "value2" };
         }
+
+        // GET api/functions
+
+        // GET api/tests
+
+        // GET api/solutions
+
+        // GET api/runs
+
+
+        // POST api/functions
+        // POST api/tests
+        // POST runs - like schedule a new run for greater run times 
 
         // GET api/values/5
         [HttpGet("{id}")]
@@ -27,8 +40,9 @@ namespace OptimService.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post([FromBody]Problem value)
         {
+            
         }
 
         // PUT api/values/5

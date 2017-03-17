@@ -11,7 +11,7 @@ namespace NewestTestProject
         public UnitTest1()
         {
              tds = TestDataService.GetInstance();
-        }
+        }  
         [TestMethod]
         public void TestMethod1()
         {
@@ -24,7 +24,7 @@ namespace NewestTestProject
             for(int i = 0; i < 5; i++)
             {
                 pop.Add(new Individual(i));
-                
+                    
             }
 
             Population paretoFront = alg.GetParetoFront(pop);

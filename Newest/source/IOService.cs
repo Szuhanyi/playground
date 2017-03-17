@@ -42,8 +42,7 @@ namespace Newest.source
                 sb.Append(p.GetElementAt(i).ToString());
             }
 
-            return sb.ToString();
-            
+            return sb.ToString();            
         }
     }
 }

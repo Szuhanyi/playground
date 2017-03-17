@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newest.source;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,23 +9,37 @@ namespace Newest.source
 {
    public class Nsga2 : Algorithm
     {
-        private int ITERATION_COUNT = 5;
+        private int _iterCount = 5;
+
+        public  Nsga2 () : base()
+        {
+            GlobalValues gl = GlobalValues.GetInstance();
+            _iterCount = gl.ITERATION_COUNT;
+        }
 
         public Population GetParetoFront(Population parent)
         {
             //Perform the sort through implementing the NSGA 2 evolutionary 
-            // multi-objective algorithm
-                        
+            // multi-objective algorithm           
             Population mutatedPopulation;                       
-            for (int i = 0; i < ITERATION_COUNT; i++)
+            for (int i = 0; i < _iterCount; i++)
             {
-                mutatedPopulation = parent.PerformMutation();
-                parent = PerformSelection(parent, mutatedPopulation);                
+                mutatedPopulation  = parent.PerformMutation();
+                //     performNonDominatedSort(parent);
+                Population mergedPopulation = mutatedPopulation.Concat(parent);
+                performNonDominatedSort(mergedPopulation);
+                parent = PerformSelection(mergedPopulation);                
             }
+
             return GetLastFront(parent);
         }
 
-        //returns the 0th front(the Pareto Front);
+        private void performNonDominatedSort(Population parent)
+        {
+            
+        }
+
+        // returns the 0th front(the Pareto Front);
         private Population GetLastFront(Population parent)
         {
             Population front = new Population();
@@ -37,10 +52,11 @@ namespace Newest.source
             }
             return front;
         }
+
         //returns a merged population
-        private Population PerformSelection(Population pop1, Population pop2)
+        private Population PerformSelection(Population mergedPopulation)
         {
-            Population mergedPopulation = pop1.Concat(pop2);
+           
             Population sorted = Sort(mergedPopulation);
             Population selected = new Population();
           
@@ -66,10 +82,8 @@ namespace Newest.source
                     {
                         front.Add(mergedPopulation.GetElementAt(i));
                     }
-
                 }
                 sorted.Add(front);
-
             }
 
             return sorted;
