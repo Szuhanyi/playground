@@ -139,5 +139,4 @@ namespace nsga
             this.decisionVariables.Add(p);
         }
     }
-
 }
